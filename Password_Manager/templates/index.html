@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row align-items-center g-4 py-5">
+  <div class="col-lg-7">
+    <div class="hero-card p-5 rounded-4 shadow">
+      <span class="badge bg-primary-subtle text-primary mb-3">Protected by encryption</span>
+      <h1 class="display-5 fw-bold mb-3">Store and manage your credentials with confidence.</h1>
+      <p class="lead text-muted">A modern password manager that keeps your secrets encrypted, searchable, and always within reach.</p>
+      <div class="d-flex gap-3 flex-wrap">
+        <a href="{{ url_for('main.register') }}" class="btn btn-primary btn-lg">Create Account</a>
+        <a href="{{ url_for('main.login') }}" class="btn btn-outline-primary btn-lg">Sign In</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card shadow-sm rounded-4 border-0 p-4">
+      <h4 class="fw-semibold mb-3">Why it stands out</h4>
+      <ul class="list-unstyled mb-0">
+        <li class="mb-2"><i class="bi bi-lock-fill text-primary me-2"></i>Fernet encryption</li>
+        <li class="mb-2"><i class="bi bi-shield-check text-primary me-2"></i>CSRF-safe forms</li>
+        <li class="mb-2"><i class="bi bi-search text-primary me-2"></i>Fast search</li>
+        <li><i class="bi bi-phone text-primary me-2"></i>Responsive UI</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

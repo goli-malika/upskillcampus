@@ -1,0 +1,34 @@
+body {
+  background: linear-gradient(135deg, #f4f8ff 0%, #eef4ff 100%);
+  color: #11243d;
+}
+
+.navbar-brand {
+  letter-spacing: 0.02em;
+}
+
+.hero-card {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  color: white;
+}
+
+.card {
+  border-radius: 1.25rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border: none;
+}
+
+.btn-outline-primary:hover {
+  background-color: #2563eb;
+}
+
+.table thead {
+  background-color: #eff6ff;
+}
+
+.small {
+  font-size: 0.9rem;
+}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-4">
+    <div class="card shadow-sm rounded-4 border-0 p-4 mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-semibold mb-0">Password Generator</h4>
+        <i class="bi bi-stars text-primary fs-4"></i>
+      </div>
+      <form method="post" action="{{ url_for('main.generate_password_view') }}">
+        <div class="mb-3">
+          <label class="form-label">Length</label>
+          <input class="form-control" type="number" name="length" min="8" max="32" value="16">
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="uppercase" checked>
+          <label class="form-check-label">Uppercase</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="lowercase" checked>
+          <label class="form-check-label">Lowercase</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="numbers" checked>
+          <label class="form-check-label">Numbers</label>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" name="symbols" checked>
+          <label class="form-check-label">Symbols</label>
+        </div>
+        <button class="btn btn-primary w-100" type="submit">Generate</button>
+      </form>
+      {% if generated_password %}
+      <div class="alert alert-success mt-3 mb-0">
+        <div class="d-flex justify-content-between align-items-center">
+          <span id="generatedPassword">{{ generated_password }}</span>
+          <button class="btn btn-sm btn-outline-success" onclick="copyToClipboard('generatedPassword')">Copy</button>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <div class="card shadow-sm rounded-4 border-0 p-4 mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h4 class="fw-semibold mb-0">Saved Passwords</h4>
+          <p class="text-muted small mb-0">Search by website or username.</p>
+        </div>
+        <a href="{{ url_for('main.add_password') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add Password</a>
+      </div>
+      <form class="row g-2 mb-3" method="get">
+        <div class="col-md-10">
+          <input class="form-control" type="text" name="search" value="{{ search_query }}" placeholder="Search website or username">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-outline-primary w-100" type="submit">Search</button>
+        </div>
+      </form>
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th>Website</th>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in passwords %}
+            <tr>
+              <td>{{ item.website }}</td>
+              <td>{{ item.username }}</td>
+              <td><span class="text-muted">••••••••</span></td>
+              <td>{{ item.created_at.strftime('%Y-%m-%d') }}</td>
+              <td>
+                <a href="{{ url_for('main.show_password', password_id=item.id) }}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
+                <a href="{{ url_for('main.edit_password', password_id=item.id) }}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                <form action="{{ url_for('main.delete_password', password_id=item.id) }}" method="post" class="d-inline">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="btn btn-sm btn-outline-danger" type="submit"><i class="bi bi-trash"></i></button>
+                </form>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="5" class="text-center text-muted py-4">No passwords found yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
